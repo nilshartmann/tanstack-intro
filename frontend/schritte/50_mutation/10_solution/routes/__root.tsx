@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import React from "react";
 
+import { BookOfTheMonth } from "../components/BookOfTheMonth.tsx";
 import { addLogEvent } from "../event-store.ts";
 
 type DemoRouterContext = {
@@ -33,11 +34,9 @@ function RootLayout() {
         </div>
       </header>
       <main className={"flex space-x-8 p-4 font-barlow text-gray-900"}>
-        <div className={"w-full"}>
-          <Outlet />
-        </div>
+        <Outlet />
 
-        {/*<BookOfTheMonth bookId={"1"} />*/}
+        <BookOfTheMonth bookId={"1"} />
       </main>
       {/*<TanStackRouterDevtools />*/}
     </div>

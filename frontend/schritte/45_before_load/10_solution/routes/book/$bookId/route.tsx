@@ -5,14 +5,14 @@ import Pending from "../../../components/Pending.tsx";
 import { reviewsForBookQueryOpts } from "../../../components/reviews-query.ts";
 import { addLogEvent } from "../../../event-store.ts";
 
-// todo:
-//   - beforeLoad({ params, context })
-//   - context.queryClient.ensureQueryData(reviewsForBookQueryOpts(bookId));
-
 export const Route = createFileRoute("/books/$bookId")({
   beforeLoad({ params, context }) {
     addLogEvent(Route.id, `beforeLoad`);
     const { bookId } = params;
+
+    // todo:
+    //     context.queryClient.ensureQueryData(bookByIdQueryOpts(bookId));
+    //     context.queryClient.ensureQueryData(reviewsForBookQueryOpts(bookId));
 
     context.queryClient.ensureQueryData(bookByIdQueryOpts(bookId));
     context.queryClient.ensureQueryData(reviewsForBookQueryOpts(bookId));

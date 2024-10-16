@@ -1,11 +1,13 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+import { bookByIdQueryOpts } from "./book-query.ts";
+
 type BookOfTheMonthProps = {
   bookId: string;
 };
 
 export function BookOfTheMonth({ bookId }: BookOfTheMonthProps) {
-  // todo:
-  const book: any = {};
-  // bookByIdQuery verwenden, um Buch zu laden
+  const { data: book } = useSuspenseQuery(bookByIdQueryOpts(bookId));
 
   return (
     <div className={"rounded border border-fuchsia-400 p-4"}>

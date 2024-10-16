@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import React from "react";
 
 import { IBookAbstract } from "./book-abstract-types.ts";
@@ -27,7 +28,14 @@ export function BookList({ books }: BookListProps) {
                 "font-anton text-2xl decoration-2 underline-offset-4 hover:text-fuchsia-700 hover:underline"
               }
             >
-              {b.title}
+              <Link
+                to={"/books/$bookId"}
+                params={{
+                  bookId: String(b.id),
+                }}
+              >
+                {b.title}
+              </Link>
             </h2>
             <p>{b.likes} Likes</p>
             <BookmarkButton bookId={b.id} />
