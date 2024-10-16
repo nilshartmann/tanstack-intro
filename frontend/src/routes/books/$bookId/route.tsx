@@ -1,8 +1,13 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
+import { bookByIdQueryOpts } from "../../../components/book-query.ts";
+import Pending from "../../../components/Pending.tsx";
+import { reviewsForBookQueryOpts } from "../../../components/reviews-query.ts";
 import { addLogEvent } from "../../../event-store.ts";
-import { bookByIdQueryOpts } from "../-queries.ts";
+
+// todo:
+//   - beforeLoad({ params, context })
+//   - context.queryClient.ensureQueryData(reviewsForBookQueryOpts(bookId));
 
 export const Route = createFileRoute("/books/$bookId")({
   beforeLoad({ params, context }) {
@@ -10,23 +15,7 @@ export const Route = createFileRoute("/books/$bookId")({
     const { bookId } = params;
 
     context.queryClient.ensureQueryData(bookByIdQueryOpts(bookId));
-    // context.queryClient.ensureQueryData(commentsForBookQueryOpts(bookId));
+    context.queryClient.ensureQueryData(reviewsForBookQueryOpts(bookId));
   },
-  pendingComponent: () => <div>Pending...</div>,
-  component: BookRoute,
+  pendingComponent: Pending,
 });
-
-function BookRoute() {
-  const bookId = Route.useParams({
-    select: (p) => p.bookId,
-  });
-
-  const x = useSuspenseQuery(bookByIdQueryOpts(bookId));
-
-  return (
-    <div>
-      <h1>{x.data.title}</h1>
-      <Outlet />
-    </div>
-  );
-}

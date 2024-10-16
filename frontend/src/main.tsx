@@ -1,7 +1,6 @@
 import "./index.css";
 
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -32,7 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <SimpleDevTool />
       <RouterProvider router={router} />
-      <ReactQueryDevtools />
+      {/*<ReactQueryDevtools />*/}
     </QueryClientProvider>
   </div>,
 );

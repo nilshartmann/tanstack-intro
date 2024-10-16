@@ -14,10 +14,11 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Route as rootRoute } from "./routes/__root";
 import { Route as IndexImport } from "./routes/index";
+import { Route as BooksIndexImport } from "./routes/books/index";
 import { Route as BooksBookIdRouteImport } from "./routes/books/$bookId/route";
 import { Route as BooksBookIdIndexImport } from "./routes/books/$bookId/index";
-import { Route as BooksBookIdCommentsRouteImport } from "./routes/books/$bookId/comments/route";
-import { Route as BooksBookIdCommentsIndexImport } from "./routes/books/$bookId/comments/index";
+import { Route as BooksBookIdReviewsRouteImport } from "./routes/books/$bookId/reviews/route";
+import { Route as BooksBookIdReviewsIndexImport } from "./routes/books/$bookId/reviews/index";
 
 // Create Virtual Routes
 
@@ -35,6 +36,11 @@ const AboutIndexLazyRoute = AboutIndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import("./routes/about/index.lazy").then((d) => d.Route));
 
+const BooksIndexRoute = BooksIndexImport.update({
+  path: "/books/",
+  getParentRoute: () => rootRoute,
+} as any);
+
 const BooksBookIdRouteRoute = BooksBookIdRouteImport.update({
   path: "/books/$bookId",
   getParentRoute: () => rootRoute,
@@ -45,14 +51,14 @@ const BooksBookIdIndexRoute = BooksBookIdIndexImport.update({
   getParentRoute: () => BooksBookIdRouteRoute,
 } as any);
 
-const BooksBookIdCommentsRouteRoute = BooksBookIdCommentsRouteImport.update({
-  path: "/comments",
+const BooksBookIdReviewsRouteRoute = BooksBookIdReviewsRouteImport.update({
+  path: "/reviews",
   getParentRoute: () => BooksBookIdRouteRoute,
 } as any);
 
-const BooksBookIdCommentsIndexRoute = BooksBookIdCommentsIndexImport.update({
+const BooksBookIdReviewsIndexRoute = BooksBookIdReviewsIndexImport.update({
   path: "/",
-  getParentRoute: () => BooksBookIdCommentsRouteRoute,
+  getParentRoute: () => BooksBookIdReviewsRouteRoute,
 } as any);
 
 // Populate the FileRoutesByPath interface
@@ -73,6 +79,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof BooksBookIdRouteImport;
       parentRoute: typeof rootRoute;
     };
+    "/books/": {
+      id: "/books/";
+      path: "/books";
+      fullPath: "/books";
+      preLoaderRoute: typeof BooksIndexImport;
+      parentRoute: typeof rootRoute;
+    };
     "/about/": {
       id: "/about/";
       path: "/about";
@@ -80,11 +93,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AboutIndexLazyImport;
       parentRoute: typeof rootRoute;
     };
-    "/books/$bookId/comments": {
-      id: "/books/$bookId/comments";
-      path: "/comments";
-      fullPath: "/books/$bookId/comments";
-      preLoaderRoute: typeof BooksBookIdCommentsRouteImport;
+    "/books/$bookId/reviews": {
+      id: "/books/$bookId/reviews";
+      path: "/reviews";
+      fullPath: "/books/$bookId/reviews";
+      preLoaderRoute: typeof BooksBookIdReviewsRouteImport;
       parentRoute: typeof BooksBookIdRouteImport;
     };
     "/books/$bookId/": {
@@ -94,39 +107,39 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof BooksBookIdIndexImport;
       parentRoute: typeof BooksBookIdRouteImport;
     };
-    "/books/$bookId/comments/": {
-      id: "/books/$bookId/comments/";
+    "/books/$bookId/reviews/": {
+      id: "/books/$bookId/reviews/";
       path: "/";
-      fullPath: "/books/$bookId/comments/";
-      preLoaderRoute: typeof BooksBookIdCommentsIndexImport;
-      parentRoute: typeof BooksBookIdCommentsRouteImport;
+      fullPath: "/books/$bookId/reviews/";
+      preLoaderRoute: typeof BooksBookIdReviewsIndexImport;
+      parentRoute: typeof BooksBookIdReviewsRouteImport;
     };
   }
 }
 
 // Create and export the route tree
 
-interface BooksBookIdCommentsRouteRouteChildren {
-  BooksBookIdCommentsIndexRoute: typeof BooksBookIdCommentsIndexRoute;
+interface BooksBookIdReviewsRouteRouteChildren {
+  BooksBookIdReviewsIndexRoute: typeof BooksBookIdReviewsIndexRoute;
 }
 
-const BooksBookIdCommentsRouteRouteChildren: BooksBookIdCommentsRouteRouteChildren =
+const BooksBookIdReviewsRouteRouteChildren: BooksBookIdReviewsRouteRouteChildren =
   {
-    BooksBookIdCommentsIndexRoute: BooksBookIdCommentsIndexRoute,
+    BooksBookIdReviewsIndexRoute: BooksBookIdReviewsIndexRoute,
   };
 
-const BooksBookIdCommentsRouteRouteWithChildren =
-  BooksBookIdCommentsRouteRoute._addFileChildren(
-    BooksBookIdCommentsRouteRouteChildren,
+const BooksBookIdReviewsRouteRouteWithChildren =
+  BooksBookIdReviewsRouteRoute._addFileChildren(
+    BooksBookIdReviewsRouteRouteChildren,
   );
 
 interface BooksBookIdRouteRouteChildren {
-  BooksBookIdCommentsRouteRoute: typeof BooksBookIdCommentsRouteRouteWithChildren;
+  BooksBookIdReviewsRouteRoute: typeof BooksBookIdReviewsRouteRouteWithChildren;
   BooksBookIdIndexRoute: typeof BooksBookIdIndexRoute;
 }
 
 const BooksBookIdRouteRouteChildren: BooksBookIdRouteRouteChildren = {
-  BooksBookIdCommentsRouteRoute: BooksBookIdCommentsRouteRouteWithChildren,
+  BooksBookIdReviewsRouteRoute: BooksBookIdReviewsRouteRouteWithChildren,
   BooksBookIdIndexRoute: BooksBookIdIndexRoute,
 };
 
@@ -136,27 +149,30 @@ const BooksBookIdRouteRouteWithChildren =
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
   "/books/$bookId": typeof BooksBookIdRouteRouteWithChildren;
+  "/books": typeof BooksIndexRoute;
   "/about": typeof AboutIndexLazyRoute;
-  "/books/$bookId/comments": typeof BooksBookIdCommentsRouteRouteWithChildren;
+  "/books/$bookId/reviews": typeof BooksBookIdReviewsRouteRouteWithChildren;
   "/books/$bookId/": typeof BooksBookIdIndexRoute;
-  "/books/$bookId/comments/": typeof BooksBookIdCommentsIndexRoute;
+  "/books/$bookId/reviews/": typeof BooksBookIdReviewsIndexRoute;
 }
 
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
+  "/books": typeof BooksIndexRoute;
   "/about": typeof AboutIndexLazyRoute;
   "/books/$bookId": typeof BooksBookIdIndexRoute;
-  "/books/$bookId/comments": typeof BooksBookIdCommentsIndexRoute;
+  "/books/$bookId/reviews": typeof BooksBookIdReviewsIndexRoute;
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   "/": typeof IndexRoute;
   "/books/$bookId": typeof BooksBookIdRouteRouteWithChildren;
+  "/books/": typeof BooksIndexRoute;
   "/about/": typeof AboutIndexLazyRoute;
-  "/books/$bookId/comments": typeof BooksBookIdCommentsRouteRouteWithChildren;
+  "/books/$bookId/reviews": typeof BooksBookIdReviewsRouteRouteWithChildren;
   "/books/$bookId/": typeof BooksBookIdIndexRoute;
-  "/books/$bookId/comments/": typeof BooksBookIdCommentsIndexRoute;
+  "/books/$bookId/reviews/": typeof BooksBookIdReviewsIndexRoute;
 }
 
 export interface FileRouteTypes {
@@ -164,32 +180,36 @@ export interface FileRouteTypes {
   fullPaths:
     | "/"
     | "/books/$bookId"
+    | "/books"
     | "/about"
-    | "/books/$bookId/comments"
+    | "/books/$bookId/reviews"
     | "/books/$bookId/"
-    | "/books/$bookId/comments/";
+    | "/books/$bookId/reviews/";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/about" | "/books/$bookId" | "/books/$bookId/comments";
+  to: "/" | "/books" | "/about" | "/books/$bookId" | "/books/$bookId/reviews";
   id:
     | "__root__"
     | "/"
     | "/books/$bookId"
+    | "/books/"
     | "/about/"
-    | "/books/$bookId/comments"
+    | "/books/$bookId/reviews"
     | "/books/$bookId/"
-    | "/books/$bookId/comments/";
+    | "/books/$bookId/reviews/";
   fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   BooksBookIdRouteRoute: typeof BooksBookIdRouteRouteWithChildren;
+  BooksIndexRoute: typeof BooksIndexRoute;
   AboutIndexLazyRoute: typeof AboutIndexLazyRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BooksBookIdRouteRoute: BooksBookIdRouteRouteWithChildren,
+  BooksIndexRoute: BooksIndexRoute,
   AboutIndexLazyRoute: AboutIndexLazyRoute,
 };
 
@@ -207,6 +227,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/books/$bookId",
+        "/books/",
         "/about/"
       ]
     },
@@ -216,27 +237,30 @@ export const routeTree = rootRoute
     "/books/$bookId": {
       "filePath": "books/$bookId/route.tsx",
       "children": [
-        "/books/$bookId/comments",
+        "/books/$bookId/reviews",
         "/books/$bookId/"
       ]
+    },
+    "/books/": {
+      "filePath": "books/index.tsx"
     },
     "/about/": {
       "filePath": "about/index.lazy.tsx"
     },
-    "/books/$bookId/comments": {
-      "filePath": "books/$bookId/comments/route.tsx",
+    "/books/$bookId/reviews": {
+      "filePath": "books/$bookId/reviews/route.tsx",
       "parent": "/books/$bookId",
       "children": [
-        "/books/$bookId/comments/"
+        "/books/$bookId/reviews/"
       ]
     },
     "/books/$bookId/": {
       "filePath": "books/$bookId/index.tsx",
       "parent": "/books/$bookId"
     },
-    "/books/$bookId/comments/": {
-      "filePath": "books/$bookId/comments/index.tsx",
-      "parent": "/books/$bookId/comments"
+    "/books/$bookId/reviews/": {
+      "filePath": "books/$bookId/reviews/index.tsx",
+      "parent": "/books/$bookId/reviews"
     }
   }
 }

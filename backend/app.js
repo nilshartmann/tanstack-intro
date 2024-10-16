@@ -14,16 +14,19 @@ const books = [
     likes: 64,
     reviews: [
       {
+        id: 1,
         reviewer: "John Doe",
         rating: 4.5,
         comment: "An enthralling mystery with unexpected twists! The atmosphere was eerie, and I couldn’t put it down."
       },
       {
+        id: 2,
         reviewer: "Jane Smith",
         rating: 4.0,
         comment: "Loved the setting and the suspense. Detective Clara is a fantastic character, though the ending felt a bit rushed."
       },
       {
+        id: 3,
         reviewer: "Mark Wilson",
         rating: 3.8,
         comment: "Good read with a unique storyline. The pacing was a bit slow at times, but the mystery kept me hooked."
@@ -40,16 +43,19 @@ const books = [
     likes: 128,
     reviews: [
       {
+        id: 4,
         reviewer: "Alice Brown",
         rating: 5.0,
         comment: "A fantastic sci-fi adventure that really makes you think! The alien civilization was fascinating, and the plot twists were brilliant."
       },
       {
+        id: 5,
         reviewer: "Samuel Green",
         rating: 4.2,
         comment: "Great story with a lot of depth. I loved the exploration of ethics and humanity’s place in the universe."
       },
       {
+        id: 6,
         reviewer: "Emily White",
         rating: 4.7,
         comment: "This book kept me on the edge of my seat! It’s thought-provoking and full of action. Highly recommend for sci-fi fans."
@@ -66,16 +72,19 @@ const books = [
     likes: 256,
     reviews: [
       {
+        id: 7,
         reviewer: "Rachel Lee",
         rating: 4.8,
         comment: "A beautiful fantasy tale with rich world-building and an unforgettable heroine. I can’t wait for the sequel!"
       },
       {
+        id: 8,
         reviewer: "Tom Hanks",
         rating: 4.3,
         comment: "The magical elements were well done, and I loved the characters. The journey was captivating from start to finish."
       },
       {
+        id: 9,
         reviewer: "Sophia Martinez",
         rating: 4.6,
         comment: "Wonderful fantasy book that reminded me of classic tales. The storyline was engaging, and the pacing was perfect."
@@ -85,6 +94,7 @@ const books = [
 ];
 
 app.use((req, res, next) => {
+
   const startTime = Date.now(); // Record the start time
   const { path, method, query } = req;
 
@@ -119,7 +129,7 @@ app.use((req, res, next) => {
 
 // Endpoint to get the list of books (ID and title)
 app.get('/api/books', (req, res) => {
-  const bookList = books.map(book => ({ id: book.id, title: book.title }));
+  const bookList = books.map(book => ({ id: book.id, title: book.title, likes: book.likes }));
   res.json(bookList);
 });
 
@@ -134,7 +144,7 @@ app.get('/api/books/:bookId', (req, res) => {
   }
 });
 
-app.patch('/books/:bookId/like', (req, res) => {
+app.patch('/api/books/:bookId/like', (req, res) => {
   const bookId = parseInt(req.params.bookId);
   const book = books.find(b => b.id === bookId);
 
@@ -142,12 +152,12 @@ app.patch('/books/:bookId/like', (req, res) => {
     book.likes += 1; // Increment the like counter
     res.json(book); // Return the updated book object
   } else {
-    res.status(404).json({ error: 'Book not found' });
+    res.status(404).json({ error: `Book '${bookId}' not found` });
   }
 });
 
 // Endpoint to get reviews for a specific book
-app.get('/api/books/:bookId/comments', (req, res) => {
+app.get('/api/books/:bookId/reviews', (req, res) => {
   const bookId = parseInt(req.params.bookId);
   const book = books.find(b => b.id === bookId);
   if (book) {
