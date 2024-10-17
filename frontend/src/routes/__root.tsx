@@ -6,8 +6,6 @@ import {
 } from "@tanstack/react-router";
 import React from "react";
 
-import { addLogEvent } from "../event-store.ts";
-
 type DemoRouterContext = {
   queryClient: QueryClient;
 };
@@ -15,7 +13,7 @@ type DemoRouterContext = {
 export const Route = createRootRouteWithContext<DemoRouterContext>()({
   component: RootLayout,
   beforeLoad: async () => {
-    addLogEvent(Route.id, "beforeLoad");
+    // addLogEvent(Route.id, "beforeLoad");
   },
 });
 

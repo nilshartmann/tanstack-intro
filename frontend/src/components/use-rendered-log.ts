@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { addLogEvent } from "../event-store.ts";
 
-const enabled = false;
+const enabled = true;
 
 export function useRenderedLog(name: string) {
   useEffect(() => {

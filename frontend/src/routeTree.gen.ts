@@ -15,6 +15,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Route as rootRoute } from "./routes/__root";
 import { Route as IndexImport } from "./routes/index";
 import { Route as BooksIndexImport } from "./routes/books/index";
+import { Route as BooksBookIdIndexImport } from "./routes/books/$bookId/index";
 
 // Create Virtual Routes
 
@@ -34,6 +35,11 @@ const AboutIndexLazyRoute = AboutIndexLazyImport.update({
 
 const BooksIndexRoute = BooksIndexImport.update({
   path: "/books/",
+  getParentRoute: () => rootRoute,
+} as any);
+
+const BooksBookIdIndexRoute = BooksBookIdIndexImport.update({
+  path: "/books/$bookId/",
   getParentRoute: () => rootRoute,
 } as any);
 
@@ -62,6 +68,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AboutIndexLazyImport;
       parentRoute: typeof rootRoute;
     };
+    "/books/$bookId/": {
+      id: "/books/$bookId/";
+      path: "/books/$bookId";
+      fullPath: "/books/$bookId";
+      preLoaderRoute: typeof BooksBookIdIndexImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
@@ -71,12 +84,14 @@ export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
   "/books": typeof BooksIndexRoute;
   "/about": typeof AboutIndexLazyRoute;
+  "/books/$bookId": typeof BooksBookIdIndexRoute;
 }
 
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
   "/books": typeof BooksIndexRoute;
   "/about": typeof AboutIndexLazyRoute;
+  "/books/$bookId": typeof BooksBookIdIndexRoute;
 }
 
 export interface FileRoutesById {
@@ -84,14 +99,15 @@ export interface FileRoutesById {
   "/": typeof IndexRoute;
   "/books/": typeof BooksIndexRoute;
   "/about/": typeof AboutIndexLazyRoute;
+  "/books/$bookId/": typeof BooksBookIdIndexRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/books" | "/about";
+  fullPaths: "/" | "/books" | "/about" | "/books/$bookId";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/books" | "/about";
-  id: "__root__" | "/" | "/books/" | "/about/";
+  to: "/" | "/books" | "/about" | "/books/$bookId";
+  id: "__root__" | "/" | "/books/" | "/about/" | "/books/$bookId/";
   fileRoutesById: FileRoutesById;
 }
 
@@ -99,12 +115,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   BooksIndexRoute: typeof BooksIndexRoute;
   AboutIndexLazyRoute: typeof AboutIndexLazyRoute;
+  BooksBookIdIndexRoute: typeof BooksBookIdIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BooksIndexRoute: BooksIndexRoute,
   AboutIndexLazyRoute: AboutIndexLazyRoute,
+  BooksBookIdIndexRoute: BooksBookIdIndexRoute,
 };
 
 export const routeTree = rootRoute
@@ -121,7 +139,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/books/",
-        "/about/"
+        "/about/",
+        "/books/$bookId/"
       ]
     },
     "/": {
@@ -132,6 +151,9 @@ export const routeTree = rootRoute
     },
     "/about/": {
       "filePath": "about/index.lazy.tsx"
+    },
+    "/books/$bookId/": {
+      "filePath": "books/$bookId/index.tsx"
     }
   }
 }

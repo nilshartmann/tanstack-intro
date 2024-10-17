@@ -1,4 +1,5 @@
 import { BookmarkIcon } from "@heroicons/react/24/outline";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { twMerge } from "tailwind-merge";
 
 import { useRenderedLog } from "./use-rendered-log.ts";
@@ -20,14 +21,27 @@ type BookmarkButtonProps = {
 //       const isBookmarked = BooksRoute.useSearch({ select: (s) => s.selectedBookId === bookId, })
 //    )
 
+const BooksRoute = getRouteApi("/books/");
+
 export default function BookmarkButton({ bookId }: BookmarkButtonProps) {
   useRenderedLog("BookmarkButton");
+  const navigate = useNavigate();
 
-  const currentlySelectedBookId = -1;
-  const isBookmarked = currentlySelectedBookId === bookId;
+  // todo: bbs
+  const isBookmarked = BooksRoute.useSearch({
+    select: (s) => s.selectedBookId === bookId,
+  });
+
+  // const currentlySelectedBookId = -1;
+  // const isBookmarked = currentlySelectedBookId === bookId;
 
   const handleBookmarkClick = () => {
-    // todo: navigate
+    navigate({
+      to: "/books",
+      search: {
+        selectedBookId: isBookmarked ? undefined : bookId,
+      },
+    });
   };
 
   return (
