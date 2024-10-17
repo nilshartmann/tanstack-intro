@@ -8,6 +8,7 @@ export const Route = createFileRoute("/books/$bookId/")({
 //  - useParams
 //     - select p.bookId
 //  - ausgeben
+//  bir
 //
 //  Todo #2:
 //   - Buch lesen (book-query.ts)

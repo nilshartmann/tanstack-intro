@@ -1,4 +1,5 @@
 import { BookmarkIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "@tanstack/react-router";
 import { twMerge } from "tailwind-merge";
 
 import { useRenderedLog } from "./use-rendered-log.ts";
@@ -22,12 +23,14 @@ type BookmarkButtonProps = {
 
 export default function BookmarkButton({ bookId }: BookmarkButtonProps) {
   useRenderedLog("BookmarkButton");
+  const navigate = useNavigate();
 
+  // todo: bbs
   const currentlySelectedBookId = -1;
   const isBookmarked = currentlySelectedBookId === bookId;
 
   const handleBookmarkClick = () => {
-    // todo: navigate
+    // todo: navigate  bbh
   };
 
   return (

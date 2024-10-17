@@ -8,7 +8,7 @@ export function useLikeMutation(bookId: number) {
 
   return useMutation({
     async mutationFn() {
-      ky.patch(`/api/books/${bookId}/like`);
+      return ky.patch(`/api/books/${bookId}/like`);
     },
     onSuccess() {
       queryClient.invalidateQueries({
