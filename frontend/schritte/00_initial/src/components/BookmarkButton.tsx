@@ -10,16 +10,6 @@ type BookmarkButtonProps = {
 
 // todo:
 //  - const BooksRoute = getRouteApi("/books/");
-//  - const selected = Route.useSearch(
-//       select: (s) => s.selectedBookId
-//    )
-//  - navigate = useNavigate()
-//    - to: "/books"
-//    - search: { selectedBooksId: .... }
-//
-//  - const selected = Route.useSearch(
-//       const isBookmarked = BooksRoute.useSearch({ select: (s) => s.selectedBookId === bookId, })
-//    )
 
 export default function BookmarkButton({ bookId }: BookmarkButtonProps) {
   useRenderedLog("BookmarkButton");
