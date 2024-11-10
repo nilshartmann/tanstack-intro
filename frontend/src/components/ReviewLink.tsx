@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 export default function ReviewLink() {
-  // todo: from "/books/$bookId/"
+  // todo: from="/books/$bookId"
   //         to="/books/$bookId/reviews"
 
   return (
