@@ -1,5 +1,5 @@
 import { BookmarkIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { twMerge } from "tailwind-merge";
 
 import { useRenderedLog } from "./use-rendered-log.ts";
@@ -9,7 +9,7 @@ type BookmarkButtonProps = {
 };
 
 // todo:
-//  - const BooksRoute = getRouteApi("/books/");
+//   const BooksRoute = getRouteApi("/books/");
 
 export default function BookmarkButton({ bookId }: BookmarkButtonProps) {
   useRenderedLog("BookmarkButton");
