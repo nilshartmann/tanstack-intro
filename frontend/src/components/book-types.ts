@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type IBookDetails = {
   id: number;
   title: string;
