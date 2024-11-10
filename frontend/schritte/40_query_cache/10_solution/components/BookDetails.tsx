@@ -19,7 +19,7 @@ export default function BookDetails({ book }: BookDetailsProps) {
       todo: add <ReviewLink />
 
       */}
-      {/*<ReviewLink />*/}
+      {<ReviewLink />}
 
       {/*
 

@@ -9,13 +9,11 @@ export const Route = createFileRoute("/books/$bookId/reviews/")({
 });
 
 function ReviewsRoute() {
-  const bookId = Route.useParams({
-    select: (p) => p.bookId,
-  });
+  const { bookId } = Route.useParams();
 
   // todo:
-  //   - book laden
-  //    - Titel anzein
+  //   - load book with bookByIdQueryOpts
+  //   - show book title
 
   const { data: reviews } = useSuspenseQuery(reviewsForBookQueryOpts(bookId));
 

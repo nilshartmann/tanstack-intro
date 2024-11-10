@@ -1,22 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import BookDetails from "../../../components/BookDetails.tsx";
+import { bookByIdQueryOpts } from "../../../components/book-query.ts";
 
 export const Route = createFileRoute("/books/$bookId/")({
   component: BookRoute,
 });
 
-// Todo:
-//  - useParams
-//     - select p.bookId
-//  - ausgeben
-//  bir
-//
-//  Todo #2:
-//   - Buch lesen (book-query.ts)
-
 function BookRoute() {
-  const bookId = Route.useParams({
-    select: (p) => p.bookId,
-  });
+  const params = Route.useParams();
 
-  return <div>Book-Id {bookId}</div>;
+  return <div>Hello, {params.bookId}</div>;
 }
