@@ -9,6 +9,7 @@ import { useRenderedLog } from "../../components/use-rendered-log.ts";
 //    - selectedBookId: z.number().optional(),
 //  - add validateSearch
 //    - return BookListRouteSearchParams.parse(s);
+//  bsp
 
 export const Route = createFileRoute("/books/")({
   component: BookListRoute,

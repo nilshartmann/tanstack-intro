@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { isLogEvent, LogEvent } from "./event-store.ts";
+import { enabledLogEvents, isLogEvent, LogEvent } from "./event-store.ts";
+
+//  👮‍♀️ YOU NEVER DO SOMETHING LIKE THIS IN YOUR APP 👮‍♀️
+//  😈 AND YOU ALSO HAVE NEVER SEEN THIS CODE 😈
 
 export default function SimpleDevTool() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(enabledLogEvents.length > 0);
   const [messages, setMessages] = useState<LogEvent[]>([]);
 
   useEffect(() => {
@@ -18,7 +21,7 @@ export default function SimpleDevTool() {
     return (
       <button
         className={
-          "absolute left-0 top-0 w-[25px] cursor-pointer rounded bg-violet-100 p-2"
+          "absolute left-0 top-0 w-12 cursor-pointer rounded bg-violet-100 p-2"
         }
         onClick={() => setVisible(true)}
       >
@@ -35,7 +38,7 @@ export default function SimpleDevTool() {
     >
       <div className={"flex items-center justify-between space-x-4"}>
         <button
-          className={"w-[25px] cursor-pointer rounded bg-violet-100 p-2"}
+          className={"w-12 cursor-pointer rounded bg-violet-100 p-2"}
           onClick={() => setVisible(false)}
         >
           X️
@@ -50,6 +53,12 @@ export default function SimpleDevTool() {
           Clear
         </button>
       </div>
+      {enabledLogEvents.length === 0 && (
+        <p>
+          ⚠️ No 'enabledLogEvents' <br />
+          (See "event-store.ts")
+        </p>
+      )}
 
       {messages.map((m) => (
         <div
