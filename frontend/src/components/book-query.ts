@@ -1,3 +1,6 @@
+import ky from "ky";
+import { IBookDetails } from "./book-types.ts";
+
 // todo #1:
 //   queryOptions()
 //     - queryKey: ["books", bookId],
@@ -9,5 +12,5 @@
 //  - hier für parse verwenden
 
 export const bookByIdQueryOpts = (bookId: string) => {
-  return null;
+  // todo qopts
 };
