@@ -21,8 +21,8 @@ export default tseslint.config(
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
-      "unused-imports": unusedImports,
-      "simple-import-sort": eslintPluginSimpleImportSort,
+      //      "unused-imports": unusedImports,
+      //      "simple-import-sort": eslintPluginSimpleImportSort,
       import: importPlugin,
     },
     rules: {
@@ -37,11 +37,11 @@ export default tseslint.config(
       "@typescript-eslint/ban-types": "off",
       // no-unsued-vars nervt beim Live Coding
       "@typescript-eslint/no-unused-vars": "off",
-      "unused-imports/no-unused-imports": "error",
-      "simple-import-sort/imports": "error",
-      "import/first": "error",
-      "import/newline-after-import": "error",
-      "import/no-duplicates": "error",
+      //      "unused-imports/no-unused-imports": "error",
+      //      "simple-import-sort/imports": "error",
+      //      "import/first": "error",
+      //      "import/newline-after-import": "error",
+      //      "import/no-duplicates": "error",
     },
   },
 );
