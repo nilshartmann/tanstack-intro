@@ -23,7 +23,7 @@ export function BookList({ books }: BookListProps) {
               - make sure, bookId has correct type! (String!)
 
               */}
-            <Link>
+            <Link to={"/books/$bookId"} params={{ bookId: String(b.id) }}>
               <h2
                 className={
                   "cursor-pointer font-anton text-2xl decoration-2 underline-offset-4 hover:text-fuchsia-700 hover:underline"

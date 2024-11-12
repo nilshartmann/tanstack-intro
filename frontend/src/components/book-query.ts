@@ -1,5 +1,5 @@
 import ky from "ky";
-import { IBookDetails } from "./book-types.ts";
+import { IBookDetails, TBookDetails } from "./book-types.ts";
 
 // todo #1:
 //   queryOptions()
@@ -12,5 +12,13 @@ import { IBookDetails } from "./book-types.ts";
 //  - hier für parse verwenden
 
 export const bookByIdQueryOpts = (bookId: string) => {
-  // todo qopts
+  return {
+    queryKey: ["books", bookId],
+    async queryFn() {
+      const data = await ky.get(`/api/books/${bookId}?slowdown=2400`).json();
+
+      const book = TBookDetails.parse(data);
+      return book;
+    },
+  };
 };

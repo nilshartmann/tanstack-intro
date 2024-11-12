@@ -8,6 +8,7 @@ import ReactDOM from "react-dom/client";
 import { createQueryClient } from "./create-query-client.ts";
 import { routeTree } from "./routeTree.gen.ts";
 import SimpleDevTool from "./SimpleDevtool.tsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = createQueryClient();
 
@@ -31,7 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <SimpleDevTool />
       <RouterProvider router={router} />
-      {/*<ReactQueryDevtools />*/}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   </div>,
 );
