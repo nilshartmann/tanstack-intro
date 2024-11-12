@@ -13,7 +13,6 @@
 import { Route as rootRoute } from "./routes/__root";
 import { Route as IndexImport } from "./routes/index";
 import { Route as BooksIndexImport } from "./routes/books/index";
-import { Route as AboutIndexImport } from "./routes/about/index";
 
 // Create/Update Routes
 
@@ -27,11 +26,6 @@ const BooksIndexRoute = BooksIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any);
 
-const AboutIndexRoute = AboutIndexImport.update({
-  path: "/about/",
-  getParentRoute: () => rootRoute,
-} as any);
-
 // Populate the FileRoutesByPath interface
 
 declare module "@tanstack/react-router" {
@@ -41,13 +35,6 @@ declare module "@tanstack/react-router" {
       path: "/";
       fullPath: "/";
       preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/about/": {
-      id: "/about/";
-      path: "/about";
-      fullPath: "/about";
-      preLoaderRoute: typeof AboutIndexImport;
       parentRoute: typeof rootRoute;
     };
     "/books/": {
@@ -64,41 +51,36 @@ declare module "@tanstack/react-router" {
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
-  "/about": typeof AboutIndexRoute;
   "/books": typeof BooksIndexRoute;
 }
 
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
-  "/about": typeof AboutIndexRoute;
   "/books": typeof BooksIndexRoute;
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   "/": typeof IndexRoute;
-  "/about/": typeof AboutIndexRoute;
   "/books/": typeof BooksIndexRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/about" | "/books";
+  fullPaths: "/" | "/books";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/about" | "/books";
-  id: "__root__" | "/" | "/about/" | "/books/";
+  to: "/" | "/books";
+  id: "__root__" | "/" | "/books/";
   fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
-  AboutIndexRoute: typeof AboutIndexRoute;
   BooksIndexRoute: typeof BooksIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutIndexRoute: AboutIndexRoute,
   BooksIndexRoute: BooksIndexRoute,
 };
 
@@ -115,15 +97,11 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about/",
         "/books/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/about/": {
-      "filePath": "about/index.tsx"
     },
     "/books/": {
       "filePath": "books/index.tsx"

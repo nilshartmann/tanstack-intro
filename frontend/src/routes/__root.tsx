@@ -27,9 +27,8 @@ function RootLayout() {
           <h1 className={"font-anton text-3xl text-violet-50 hover:underline"}>
             <Link to="/books"> Books and Routing!</Link>
           </h1>
-          <Link className={"text-violet-50 hover:underline"} to={"/about"}>
-            About us
-          </Link>
+          {/*todo: /about-Link*/}
+          <Link className={"text-violet-50 hover:underline"}>About us</Link>
         </div>
       </header>
       <main className={"flex space-x-8 p-4 font-barlow text-gray-900"}>
