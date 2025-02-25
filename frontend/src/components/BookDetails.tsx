@@ -11,7 +11,7 @@ export default function BookDetails({ book }: BookDetailsProps) {
       <h1 className={"font-anton text-2xl font-medium text-fuchsia-700"}>
         {book.title}
       </h1>
-      <p>{book.author}</p>
+      <p>{book.author.toUpperCase()}</p>
       <p>{book.summary}</p>
       <p>{book.likes} Likes</p>
       {/*
