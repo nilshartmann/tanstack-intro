@@ -6,6 +6,7 @@
   "scripts": {
     "backend": "cd ../backend && pnpm start",
     "dev": "vite",
+    "start:clean": "rm -rf dist/ && pnpm build && pnpm preview",
     "build": "tsc -b && vite build",
     "build:clean": "rm -rf dist/ && pnpm lint && pnpm build",
     "check": "pnpm tsc -b --noEmit && pnpm prettier:check && pnpm lint",
