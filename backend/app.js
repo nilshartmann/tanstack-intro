@@ -138,6 +138,10 @@ app.get('/api/books/:bookId', (req, res) => {
   const bookId = parseInt(req.params.bookId);
   const book = books.find(b => b.id === bookId);
   if (book) {
+    if ('fail' in  req.query) {
+      const failingBook = {...book, author: null};
+      return res.json(failingBook)
+    }
     res.json(book);
   } else {
     res.status(404).json({ error: 'Book not found' });
