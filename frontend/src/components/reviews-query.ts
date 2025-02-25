@@ -8,7 +8,7 @@ export const reviewsForBookQueryOpts = (bookId: string) =>
     queryKey: ["books", bookId, "reviews"],
     async queryFn() {
       const data = await ky
-        .get(`/api/books/${bookId}/reviews?slowdown=4800`)
+        .get(`/api/books/${bookId}/reviews?slowdown=0`)
         .json();
       return GetReviewsResponseSchema.parse(data);
     },

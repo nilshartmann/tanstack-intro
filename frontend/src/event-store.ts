@@ -7,7 +7,7 @@ export type LogEvent = {
 
 export type LogEventType = "Rendered" | "beforeLoad";
 
-export const enabledLogEvents: LogEventType[] = [];
+export const enabledLogEvents: LogEventType[] = ["Rendered"];
 
 export function isLogEvent(e: Event): e is CustomEvent<LogEvent> {
   return e.type === "logEvent"; //  instanceof CustomEvent && "message" in e.detail && "id" in e.detail;

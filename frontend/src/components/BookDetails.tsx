@@ -1,6 +1,7 @@
 import { IBookDetails } from "./book-types.ts";
 import { LikeBookButton } from "./LikeBookButton.tsx";
 import ReviewLink from "./ReviewLink.tsx";
+import Reviews from "./Reviews.tsx";
 
 type BookDetailsProps = {
   book: IBookDetails;
@@ -14,6 +15,8 @@ export default function BookDetails({ book }: BookDetailsProps) {
       <p>{book.author.toUpperCase()}</p>
       <p>{book.summary}</p>
       <p>{book.likes} Likes</p>
+
+      <Reviews bookId={book.id} />
       {/*
 
       todo: add <ReviewLink />

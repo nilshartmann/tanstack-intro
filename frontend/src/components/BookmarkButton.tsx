@@ -9,18 +9,26 @@ type BookmarkButtonProps = {
 };
 
 // todo:
-//   const BooksRoute = getRouteApi("/books/");
+const BooksRoute = getRouteApi("/books/");
 
 export default function BookmarkButton({ bookId }: BookmarkButtonProps) {
   useRenderedLog("BookmarkButton");
   const navigate = useNavigate();
 
   // todo: bbs
-  const currentlySelectedBookId = -1;
-  const isBookmarked = currentlySelectedBookId === bookId;
+  const isBookmarked = BooksRoute.useSearch({
+    select: (s) => s.selectedBookId === bookId,
+  });
+
+  // const isBookmarked = currentlySelectedBookId === bookId;
 
   const handleBookmarkClick = () => {
-    // todo: navigate  bbh
+    navigate({
+      to: "/books",
+      search: {
+        selectedBookId: isBookmarked ? undefined : bookId,
+      },
+    });
   };
 
   return (

@@ -1,5 +1,6 @@
 import ky from "ky";
-import { IBookDetails } from "./book-types.ts";
+import { IBookDetails, TBookDetails } from "./book-types.ts";
+import { queryOptions } from "@tanstack/react-query";
 
 // todo #1:
 //   queryOptions()
@@ -10,7 +11,14 @@ import { IBookDetails } from "./book-types.ts";
 // todo #2:
 //  - zod Typen in book-types.ts bauen
 //  - hier für parse verwenden
+export const bookByIdQueryOpts = (bookId: string) =>
+  queryOptions({
+    queryKey: ["books", bookId],
+    async queryFn() {
+      const data = await ky.get(`/api/books/${bookId}?slowdown=0`).json();
 
-export const bookByIdQueryOpts = (bookId: string) => {
-  // todo qopts
-};
+      const book = TBookDetails.parse(data);
+
+      return book;
+    },
+  });
